@@ -55,9 +55,10 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.9.5")
 
     // Networking
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation(libs.retrofit)
     implementation("com.squareup.retrofit2:converter-gson:3.0.0")
-    implementation("com.squareup.okhttp3:okhttp:5.2.1")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
 
     // Image loading
     implementation("io.coil-kt:coil-compose:2.7.0")
