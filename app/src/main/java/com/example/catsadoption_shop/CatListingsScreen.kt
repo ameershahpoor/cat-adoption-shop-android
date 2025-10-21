@@ -1,6 +1,7 @@
 package com.example.catsadoption_shop
 
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -8,10 +9,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
-import com.example.catsadoption_shop.CatRepository
-import com.example.catsadoption_shop.CatResponse
+
 
 @Composable
 fun CatListingsScreen(onLoginClick: () -> Unit) {
@@ -64,4 +67,35 @@ fun CatListingsScreen(onLoginClick: () -> Unit) {
             Text("Login to Your Dashboard")
         }
     }
+}
+
+
+
+@Composable
+fun CatItem(cat: CatResponse) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+            .clickable { /* navigate to detail later */ },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        AsyncImage(
+            model = cat.url,
+            contentDescription = "Cat image",
+            modifier = Modifier.size(100.dp),
+            contentScale = ContentScale.Crop
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Column {
+            Text("Cat ID: ${cat.id}", style = MaterialTheme.typography.titleMedium)
+            Text("Resolution: ${cat.width ?: "?"}×${cat.height ?: "?"}")
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CatListingsScreenPreview() {
+    CatListingsScreen(onLoginClick = {})
 }

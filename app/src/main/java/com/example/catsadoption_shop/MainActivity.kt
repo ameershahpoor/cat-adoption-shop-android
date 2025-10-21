@@ -1,5 +1,6 @@
 package com.example.catsadoption_shop
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,37 +12,46 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.catsadoption_shop.ui.theme.CatsAdoptionShopTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             CatsAdoptionShopTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                CatsAdoptionShopApp()
             }
         }
     }
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun CatsAdoptionShopApp() {
+    val navController = rememberNavController()
+    Scaffold {
+        NavigationGraph(navController)
+    }
+}
+
+@Composable
+fun NavigationGraph(navController: NavHostController) {
+    NavHost(navController, startDestination = "cats") {
+        composable("cats") {
+            CatListingsScreen(onLoginClick = { navController.navigate("dashboard") })
+        }
+        //composable("dashboard") { UserDashboardScreen() } //TODO later
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     CatsAdoptionShopTheme {
-        Greeting("Android")
+        CatsAdoptionShopApp()
     }
 }
