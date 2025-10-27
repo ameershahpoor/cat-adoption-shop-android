@@ -42,9 +42,17 @@ fun CatsAdoptionShopApp() {
 fun NavigationGraph(navController: NavHostController) {
     NavHost(navController, startDestination = "cats") {
         composable("cats") {
-            CatListingsScreen(onLoginClick = { navController.navigate("dashboard") })
+            CatListingsScreen(onLoginClick = { navController.navigate("login") })
         }
-        //composable("dashboard") { UserDashboardScreen() } //TODO later
+        composable("login") {
+            LoginScreen(onLoginSuccess = { username ->
+                navController.navigate("dashboard/$username")
+            })
+        }
+        composable("dashboard/{username}") { backStackEntry ->
+            val username = backStackEntry.arguments?.getString("username") ?: "Guest"
+            UserDashboardScreen(username)
+        }
     }
 }
 
