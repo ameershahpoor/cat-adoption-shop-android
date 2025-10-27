@@ -42,3 +42,24 @@ fun UserDashboardScreen(username: String) {
         }
     }
 }
+
+@Composable
+fun AdoptedCatItem(cat: CatResponse) {
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Row(modifier = Modifier.padding(12.dp)) {
+            AsyncImage(
+                model = cat.url,
+                contentDescription = "Adopted cat",
+                modifier = Modifier.size(90.dp)
+            )
+            Spacer(Modifier.width(12.dp))
+            Column {
+                Text("Cat ID: ${cat.id}", style = MaterialTheme.typography.titleMedium)
+                Text("Resolution: ${cat.width ?: "?"}×${cat.height ?: "?"}")
+            }
+        }
+    }
+}
