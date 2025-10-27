@@ -46,15 +46,25 @@ fun NavigationGraph(navController: NavHostController) {
         }
         composable("login") {
             LoginScreen(onLoginSuccess = { username ->
-                navController.navigate("dashboard/$username")
+                navController.navigate("dashboard/$username") {
+                    // remove login from backstack so back button doesn't go back to login
+                    popUpTo("cats") { inclusive = false }
+                }
             })
         }
         composable("dashboard/{username}") { backStackEntry ->
             val username = backStackEntry.arguments?.getString("username") ?: "Guest"
-            UserDashboardScreen(username)
+            UserDashboardScreen(username = username, onLogout = {
+                // navigate back to login and clear dashboard from backstack
+                navController.navigate("login") {
+                    popUpTo("cats") { inclusive = false }
+                    launchSingleTop = true
+                }
+            })
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

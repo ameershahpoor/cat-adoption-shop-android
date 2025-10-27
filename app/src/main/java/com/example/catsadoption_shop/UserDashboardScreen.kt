@@ -11,30 +11,48 @@ import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
 
 @Composable
-fun UserDashboardScreen(username: String) {
+fun UserDashboardScreen(
+    username: String,
+    onLogout: () -> Unit
+) {
     val scope = rememberCoroutineScope()
     var adoptedCats by remember { mutableStateOf<List<CatResponse>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
         scope.launch {
-            // This simulates an IDOR-vulnerable request
-            // Later I'll swap to: GET /user/{id}/cats
+            // Placeholder for the user-specific request (later replace with /user/{id}/cats)
             adoptedCats = CatRepository.fetchCats().take(5)
             isLoading = false
         }
     }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text("Welcome $username 🐾", style = MaterialTheme.typography.headlineMedium)
-        Spacer(Modifier.height(8.dp))
-        Text("Your adopted cats:", style = MaterialTheme.typography.titleMedium)
-        Spacer(Modifier.height(16.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column {
+                Text("Welcome $username 🐾", style = MaterialTheme.typography.headlineMedium)
+                Spacer(modifier = Modifier.height(4.dp))
+                Text("Your adopted cats:", style = MaterialTheme.typography.titleMedium)
+            }
+
+            // Logout button
+            Button(
+                onClick = onLogout,
+                modifier = Modifier.alignByBaseline()
+            ) {
+                Text("Logout")
+            }
+        }
+
+        Spacer(Modifier.height(12.dp))
 
         if (isLoading) {
             CircularProgressIndicator()
         } else {
-            LazyColumn {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(adoptedCats) { cat ->
                     AdoptedCatItem(cat)
                 }
