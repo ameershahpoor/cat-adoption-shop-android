@@ -1,74 +1,127 @@
 package com.example.catsadoption_shop
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.catsadoption_shop.ui.theme.CatsAdoptionShopTheme
 
+/**
+ * Main entry point for the app.
+ * This version starts with the cat listings instead of the login screen.
+ * The user can browse cats freely and choose to log in or register if they want.
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             CatsAdoptionShopTheme {
+                // Launch the main composable that controls navigation and app state
                 CatsAdoptionShopApp()
             }
         }
     }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+/**
+ * Root composable that manages navigation between all screens
+ * and maintains the user's login state.
+ */
 @Composable
 fun CatsAdoptionShopApp() {
+    // Create a navigation controller to handle route changes
     val navController = rememberNavController()
-    Scaffold {
-        NavigationGraph(navController)
-    }
-}
 
-@Composable
-fun NavigationGraph(navController: NavHostController) {
-    NavHost(navController, startDestination = "cats") {
-        composable("cats") {
-            CatListingsScreen(onLoginClick = { navController.navigate("login") })
+    // Track the currently logged-in username; null means the user is logged out
+    var loggedInUsername by remember { mutableStateOf<String?>(null) }
+
+    // Determine which screen to show when the app first launches
+    // If no one is logged in, start on the listings page
+    val startDestination = if (loggedInUsername == null) "listings" else "dashboard"
+
+    // Navigation graph: defines all available screens and how to move between them
+    NavHost(navController = navController, startDestination = startDestination) {
+
+        /**
+         * 1. Cat Listings Screen
+         *    - This is the default starting point.
+         *    - Shows available cats for adoption.
+         *    - Includes a "Login / Register" button that leads to the login screen.
+         */
+        composable("listings") {
+            CatListingsScreen(
+                onLoginClick = {
+                    // When the login button is clicked, go to the login screen
+                    navController.navigate("login")
+                }
+            )
         }
+
+        /**
+         * 2. Login Screen
+         *    - Allows users to log in (or optionally register if implemented).
+         *    - On successful login, saves the username and navigates to the dashboard.
+         *    - Includes an optional cancel button that returns to listings.
+         */
         composable("login") {
-            LoginScreen(onLoginSuccess = { username ->
-                navController.navigate("dashboard/$username") {
-                    // remove login from backstack so back button doesn't go back to login
-                    popUpTo("cats") { inclusive = false }
+            LoginScreen(
+                onLoginSuccess = { username ->
+                    // Save the logged-in user’s name
+                    loggedInUsername = username
+
+                    // Navigate to the dashboard and clear back stack so the user
+                    // cannot go back to the login or listings screens
+                    navController.navigate("dashboard") {
+                        popUpTo("listings") { inclusive = true }
+                    }
                 }
-            })
+            )
         }
-        composable("dashboard/{username}") { backStackEntry ->
-            val username = backStackEntry.arguments?.getString("username") ?: "Guest"
-            UserDashboardScreen(username = username, onLogout = {
-                // navigate back to login and clear dashboard from backstack
-                navController.navigate("login") {
-                    popUpTo("cats") { inclusive = false }
-                    launchSingleTop = true
+
+        /**
+         * 3. Dashboard Screen
+         *    - Visible only to logged-in users.
+         *    - Displays user-specific information (e.g., adopted cats).
+         *    - Includes a logout button that clears login state and returns to listings.
+         */
+        composable("dashboard") {
+            val username = loggedInUsername
+
+            if (username != null) {
+                // User is logged in, show the dashboard
+                UserDashboardScreen(
+                    username = username,
+                    onLogout = {
+                        // Clear the user's session
+                        loggedInUsername = null
+
+                        // Return to the listings screen and clear navigation stack
+                        navController.navigate("listings") {
+                            popUpTo(navController.graph.id) { inclusive = true }
+                        }
+                    }
+                )
+            } else {
+                // Safety fallback: If the dashboard is accessed without being logged in,
+                // redirect immediately back to the listings screen
+                navController.navigate("listings") {
+                    popUpTo(navController.graph.id) { inclusive = true }
                 }
-            })
+            }
         }
     }
 }
 
-
-@Preview(showBackground = true)
+/**
+ * Preview composable for Android Studio.
+ * Displays the app layout inside the preview window.
+ */
 @Composable
-fun GreetingPreview() {
+@androidx.compose.ui.tooling.preview.Preview(showBackground = true)
+fun PreviewCatsAdoptionShopApp() {
     CatsAdoptionShopTheme {
         CatsAdoptionShopApp()
     }
