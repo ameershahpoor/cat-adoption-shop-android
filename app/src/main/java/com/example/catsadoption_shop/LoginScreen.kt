@@ -25,7 +25,6 @@ fun LoginScreen(onLoginSuccess: (String) -> Unit) {
     val coroutineScope = rememberCoroutineScope()
 
     // This is where you use the database components.
-    // This will resolve the "never used" warnings.
     val userRepository = remember {
         val userDao = AppDatabase.getDatabase(context).userDao()
         UserRepository(userDao)
