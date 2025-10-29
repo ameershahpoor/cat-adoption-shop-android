@@ -16,7 +16,7 @@ class UserRepository(private val userDao: UserDao) {
         return true // Grants access
     }
 
-    suspend fun findUserByName(username: String): User? {
+    suspend fun getUserByUsername(username: String): User? {
         // Only perform the check if security check passes
         if (!isAccessSecure()) {
             return null
