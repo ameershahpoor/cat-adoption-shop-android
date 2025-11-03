@@ -1,9 +1,11 @@
 package com.example.catsadoption_shop
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -52,10 +54,15 @@ fun CatsAdoptionShopApp() {
          *    - Includes a "Login / Register" button that leads to the login screen.
          */
         composable("listings") {
+            val context = LocalContext.current
             CatListingsScreen(
                 onLoginClick = {
                     // When the login button is clicked, go to the login screen
                     navController.navigate("login")
+                },
+                onCatCommunicatorClick = {
+                    val intent = Intent(context, PermissionCheckActivity::class.java)
+                    context.startActivity(intent)
                 }
             )
         }
