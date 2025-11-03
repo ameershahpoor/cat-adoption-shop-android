@@ -1,6 +1,5 @@
 package com.example.catsadoption_shop
 
-
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,7 +16,11 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun CatListingsScreen(onLoginClick: () -> Unit, onCatCommunicatorClick: () -> Unit) {
+fun CatListingsScreen(
+    onLoginClick: () -> Unit,
+    onCatCommunicatorClick: () -> Unit,
+    onAdminClick: () -> Unit
+) {
     val scope = rememberCoroutineScope()
     var cats by remember { mutableStateOf<List<CatResponse>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
@@ -72,6 +75,15 @@ fun CatListingsScreen(onLoginClick: () -> Unit, onCatCommunicatorClick: () -> Un
         ) {
             Text("Cat Communicator")
         }
+
+        if (AppConfig.IS_ADMIN_ENABLED) {
+            Button(
+                onClick = onAdminClick,
+                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+            ) {
+                Text("Admin Dashboard")
+            }
+        }
     }
 }
 
@@ -103,5 +115,5 @@ fun CatItem(cat: CatResponse) {
 @Preview(showBackground = true)
 @Composable
 fun CatListingsScreenPreview() {
-    CatListingsScreen(onLoginClick = {}, onCatCommunicatorClick = {})
+    CatListingsScreen(onLoginClick = {}, onCatCommunicatorClick = {}, onAdminClick = {})
 }
