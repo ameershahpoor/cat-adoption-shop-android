@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
@@ -63,6 +64,9 @@ fun CatsAdoptionShopApp() {
                 onCatCommunicatorClick = {
                     val intent = Intent(context, PermissionCheckActivity::class.java)
                     context.startActivity(intent)
+                },
+                onAdminClick = {
+                    navController.navigate("admin_dashboard")
                 }
             )
         }
@@ -119,8 +123,17 @@ fun CatsAdoptionShopApp() {
                 }
             }
         }
+
+        /**
+         * 4. Admin Dashboard Screen
+         *    - A placeholder screen for admin-only functionality.
+         */
+        composable("admin_dashboard") {
+            AdminDashboardScreen()
+        }
     }
 }
+
 
 /**
  * Preview composable for Android Studio.
