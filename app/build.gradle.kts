@@ -65,6 +65,9 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.7.0")
     implementation(libs.androidx.compose.runtime)
 
+    // WorkManager
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
