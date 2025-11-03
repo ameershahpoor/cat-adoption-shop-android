@@ -43,9 +43,12 @@ Two major vulnerability features were successfully integrated:
 3.  The task runs every **15 minutes** (`TimeUnit.MINUTES`), recording 15 seconds of audio.
 4.  Audio files (`audio_record_[timestamp].3gp`) are saved to the app's internal cache: `/data/data/com.example.catsadoption_shop/cache/`.
 
+![img.png](images/img.png)
+
 **Exploitation Method:**
 Retrieval of the stolen data requires **root access** to pull files from the protected cache directory using `adb pull`.
-
+![img.png](images/img1.png)
+![img.png](images/img2.png)
 ---
 
 ### Feature 2 — Modifiable Functionality via Decompilation
@@ -54,8 +57,11 @@ Retrieval of the stolen data requires **root access** to pull files from the pro
 
 **Main Files & Components:**
 * `AppConfig.kt`: Contains the intentional vulnerability: `const val IS_ADMIN_ENABLED = false`.
+![img.png](images/img3.png)
 * `CatListingsScreen.kt`: Conditionally displays the **"Admin Dashboard"** button based on the `IS_ADMIN_ENABLED` flag.
+![img.png](images/img4.png)
 * `AdminDashboardScreen.kt`: The target screen displaying the success message.
+![img.png](images/img5.png)
 
 **Exploitation Method:**
 1.  Attacker (Member 4) decompiles the APK (e.g., using **apktool**).
@@ -79,6 +85,7 @@ Retrieval of the stolen data requires **root access** to pull files from the pro
 
 **Demonstration and Bypass:**
 * **Root Detected:** When run on a standard rooted device (no root-hiding), `isDeviceRooted()` returns `true`. The "Cat Communicator" button is **disabled**, and clicking it displays a "Security violation detected" Toast message.
+![img.png](images/img6.png)
 * **Bypass with Magisk:** By enabling **Zygisk** and adding the app's package name (`com.example.catsadoption_shop`) to the **DenyList** within the Magisk Manager, the root-hiding tool intercepts the check calls. The `isDeviceRooted()` function is tricked into returning `false`, successfully **enabling** the "Cat Communicator" button and allowing the malware to be scheduled.
 
 ---

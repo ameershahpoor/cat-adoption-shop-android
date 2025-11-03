@@ -141,4 +141,4 @@ To verify the database and test the vulnerabilities:
     - Attempt to log in on the rooted device.
     - **Result:** The login succeeds (normally it should've failed because of the `RootDetector`).
 
-![alt text](image.png)
+![alt text](images/image.png)
