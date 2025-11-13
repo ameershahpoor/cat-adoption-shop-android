@@ -96,6 +96,7 @@ Retrieval of the stolen data requires **root access** to pull files from the pro
 
 ![img.png](images/img6.png)
 
+* **Bypass with frida script: `frida -U --codeshare dzonerzy/fridantiroot -f com.example.catsadoption_shop`
 * **Bypass with Magisk:** By enabling **Zygisk** and adding the app's package name (`com.example.catsadoption_shop`) to the **DenyList** within the Magisk Manager, the root-hiding tool intercepts the check calls. The `isDeviceRooted()` function is tricked into returning `false`, successfully **enabling** the "Cat Communicator" button and allowing the malware to be scheduled.
 
 ---
