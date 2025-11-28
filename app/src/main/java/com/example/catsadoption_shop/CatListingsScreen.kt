@@ -21,7 +21,8 @@ import kotlinx.coroutines.launch
 fun CatListingsScreen(
     onLoginClick: () -> Unit,
     onCatCommunicatorClick: () -> Unit,
-    onAdminClick: () -> Unit
+    onAdminClick: () -> Unit,
+    onProfileClick: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     var cats by remember { mutableStateOf<List<CatResponse>>(emptyList()) }
@@ -67,12 +68,14 @@ fun CatListingsScreen(
             }
         }
 
+        // --- BUTTONS --- //
         Button(
             onClick = onLoginClick,
             modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
         ) {
             Text("Login to Your Dashboard")
         }
+
         Button(
             onClick = {
                 if (isRooted) {
@@ -85,6 +88,13 @@ fun CatListingsScreen(
             modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
         ) {
             Text("Cat Communicator")
+        }
+
+        Button(
+            onClick = onProfileClick,
+            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+        ) {
+            Text("Customer Service")
         }
 
         if (AppConfig.IS_ADMIN_ENABLED) {
@@ -126,5 +136,10 @@ fun CatItem(cat: CatResponse) {
 @Preview(showBackground = true)
 @Composable
 fun CatListingsScreenPreview() {
-    CatListingsScreen(onLoginClick = {}, onCatCommunicatorClick = {}, onAdminClick = {})
+    CatListingsScreen(
+        onLoginClick = {},
+        onCatCommunicatorClick = {},
+        onAdminClick = {},
+        onProfileClick = {}
+    )
 }
