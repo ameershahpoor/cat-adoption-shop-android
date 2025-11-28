@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "CatsAdoption-Shop"
 include(":app")
- 
