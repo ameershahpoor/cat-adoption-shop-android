@@ -12,11 +12,15 @@ import com.example.catsadoption_shop.data.UserDao
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao() : UserDao
     companion object {
-        @Volatile
+        @Volatile // Volatile makes it so any changes are instantly shown across all threads
         private var INSTANCE: AppDatabase? = null
 
         fun getDatabase(context: Context): AppDatabase {
+            // Checks if the database exists or not, if it exists it returns the instance
+            // If it doesn't exist, the code enters a synchronized block, meaning only one thread can enter it at a time,
+            // this prevents two separate threads from creating two separate databases
             return INSTANCE ?: synchronized(this) {
+                // This is where the database is created
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
