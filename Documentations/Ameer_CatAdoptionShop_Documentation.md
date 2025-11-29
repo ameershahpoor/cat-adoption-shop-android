@@ -129,7 +129,7 @@ For example, modifying:
 
 The backend performs no validation, so it returns the profile data of the requested user ID — even though the attacker is not authenticated as that user.
 
-![alt text](images/img13-1.png)
+![alt text](images/img13.png)
 
 ### Unauthorized Access to Other Users’ Data
 
@@ -164,5 +164,3 @@ In real-world systems, this would be categorized as a **High** or **Critical** s
 **End of documentation — Member 4 (Ameer)**
 
 
-
-[def]: img7.png
