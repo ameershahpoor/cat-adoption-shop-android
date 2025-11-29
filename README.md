@@ -76,6 +76,8 @@ An intentional vulnerability was introduced in how user passwords are stored to 
 - **Implementation:** A `WeakEncryption.kt` utility object was created. Instead of using a strong, one-way cryptographic hash function, it uses simple **Base64 encoding** to "encrypt" the password before storing it in the local Room database.
 -   **Vulnerability:** Base64 is an encoding scheme, not encryption. It is designed for data transport, not security, and is trivially reversible. An attacker who gains access to the database file (e.g., on a rooted device or via a backup) can easily decode the `encryptedPassword` column to reveal the user's original plaintext password, completely compromising the account.
 
+![alt text](Images-README/unsecure-database.png)
+**Example:** User: koenk1, encryptedPassword: a29lbmxvdmVzY2hvY28=, decryptedPassword: koenloveschoco
 
 ### Malware
 Implementation of malware.
