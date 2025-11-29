@@ -50,7 +50,7 @@ This is the screen you see on startup, the Cat Listing Screen, which shows a lis
 - **Customer Service**: This button navigates to the User Profile screen for a hardcoded user (`route: "userProfile/1"`). The `UserProfileScreen` shows the title "Customer Service" when the loaded profile has role `owner`. Because the listings screen navigates to a fixed `userId` this demonstrates the IDOR-style route usage in the app (hardcoded/profile-by-id behavior).
 
 Additionally, the app can show an **Admin Dashboard** button when `AppConfig.IS_ADMIN_ENABLED` is true; that button navigates to `admin_dashboard`.
-![alt text](<Images-README/Screenshot 2025-11-29 124032.png>)
+![alt text](Images-README/admin-screen.png)
 
 ### Secure API request
 *Request to server x retrieving JSON in the following format displayed in screen x.*
@@ -67,9 +67,11 @@ A local database was implemented using the Android Room Persistence Library to s
 - **Usage:** The database is used by the **Login Screen**. When a user clicks "Register", their details are written to the database. When they click "Login", their info gets queried to the database, so it can verify the users existence and password.
 
 ### Secure storage
-Type of data stored used in screen x and displayed in screen y.
+*Type of data stored used in screen x and displayed in screen y.*
 
 ### Unsecure storage
+*Type of data stored used in screen x and displayed in screen y.*
+
 An intentional vulnerability was introduced in how user passwords are stored to demonstrate the risk of using weak protection for sensitive data.
 
 -  **Type of Data:** User passwords.
@@ -80,13 +82,70 @@ An intentional vulnerability was introduced in how user passwords are stored to 
 **Example:** User: koenk1, encryptedPassword: a29lbmxvdmVzY2hvY28=, decryptedPassword: koenloveschoco
 
 ### Malware
-Implementation of malware.
+*Implementation of malware.*
 
 ### Frida
-Detail implementation of Frida
+*Detail implementation of Frida - Abdullah*
+
+A Frida script was developed to demonstrate the bypass of a client-side security control at runtime.
+
+-   **Target:** The `isAccessSecure()` method within the `UserRepository.kt` class. This method is designed to check for a rooted device and block data access if one is detected.
+-   **Implementation (`bypass.js`):** A JavaScript script was written to hook into the running application process. It uses `Java.perform` to get a handle to the `UserRepository` class and then replaces the implementation of the `isAccessSecure()` method with a new function that simply returns `return true;`.
+-   **Execution:** The attack is launched from a command line using the Frida tools. The script is injected into the app process at startup, effectively neutralizing the root check before it can ever be executed during a login attempt.
+-   **Commands Used:**
+    ```
+    adb root
+    adb push "C:\Users\abdul\Documents\Howest\Cybersecurity_Y2\MobileSec\frida-server-17.4.0-android-x86_64\frida-server" /data/local/tmp
+    adb shell "chmod 755 /data/local/tmp/frida-server"
+    adb shell "/data/local/tmp/frida-server &"
+
+    frida -U -f com.example.catsadoption_shop -l bypass-project.js
+    ```
+- **Frida-bypass:**
+    ```
+    // Frida script to bypass the root check in the CatsAdoption-Shop app
+
+    console.log(
+    "[*] Frida script loaded. Waiting for the app to call the target function..."
+    );
+
+    // Use setTimeout to ensure Java classes are loaded before we try to hook them
+    setTimeout(function () {
+    // Java.perform is the main entry point for any Frida script interacting with Java code
+    Java.perform(function () {
+        console.log(
+        "[*] Inside Java.perform(). Searching for the UserRepository class..."
+        );
+
+    // 1. Get a handle to the UserRepository class
+    const UserRepository = Java.use(
+      "com.example.catsadoption_shop.data.UserRepository"
+    );
+
+    // 2. Hook the target method: isAccessSecure()
+    UserRepository.isAccessSecure.implementation = function () {
+      // Log a message to the Frida console to confirm our hook is working
+      console.log("[+] Intercepted call to isAccessSecure()!");
+      console.log(
+        "[+]   Original function would have returned 'false' on a rooted device."
+      );
+      console.log("[+]   Forcing it to return 'true' instead.");
+
+      // 3. Force the function to return 'true'
+      // This bypasses the root check completely.
+      return true;
+    };
+
+    console.log("[*] UserRepository.isAccessSecure() is now hooked.");
+  });
+    }, 0);
+    ```
+
+*Detail implementation of Frida - Zeini*
+
 
 ### Root
-Implementation of the detecting root and block functionality.
+*Implementation of the detecting root and block functionality.*
 
 ## Link to Panopto video
 https://
