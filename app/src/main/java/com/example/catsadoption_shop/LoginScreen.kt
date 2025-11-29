@@ -83,7 +83,7 @@ fun LoginScreen(onLoginSuccess: (String) -> Unit) {
                     } else {
                         // The user is null either because they don't exist OR the root check failed.
                         // This provides a vague error message to the user, as is common.
-                        message = "Invalid username or password."
+                        message = "Invalid login, or the device might be rooted."
                     }
                 }
             }) {
