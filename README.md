@@ -33,33 +33,45 @@ The "Cats Adoption Shop" is an Android application built using Kotlin. The app a
 
 
 ## Overview app
-Describe the implementation of the following topics.
+*Describe the implementation of the following topics.*
 
-### ![](ReadmeImages/Screenshot.png) Screenshots
-Give screenshots for every screen in the application. Give each screen an unique name.
+### Screenshots
+*Give screenshots for every screen in the application. Give each screen an unique name.*
 
-### ![](ReadmeImages/API.png) Secure API request
+![alt text](image.png)
+
+This is the screen you see on startup, the Cat Listing Screen, which shows a list of available cats for adoption. The bottom of the screen contains three primary buttons (visible in the screenshot) that lead to other parts of the app:
+
+- **Login to Your Dashboard**: Navigates to the Login / Registration screen. After a successful login the app navigates to the User Dashboard.
+
+- **Cat Communicator**: This button is guarded by a root-detection check and is disabled when the device is detected as rooted (the screenshot shows it disabled/greyed out). The intended flow requests microphone permission (see `PermissionCheckActivity`) and schedules the communicator/recording work; in `MainActivity` the communicator click handler is currently a placeholder.
+
+- **Customer Service**: This button navigates to the User Profile screen for a hardcoded user (`route: "userProfile/1"`). The `UserProfileScreen` shows the title "Customer Service" when the loaded profile has role `owner`. Because the listings screen navigates to a fixed `userId` this demonstrates the IDOR-style route usage in the app (hardcoded/profile-by-id behavior).
+
+Additionally, the app can show an **Admin Dashboard** button when `AppConfig.IS_ADMIN_ENABLED` is true; that button navigates to `admin_dashboard`.
+
+### Secure API request
 Request to server x retrieving JSON in the following format displayed in screen x.
 
-### ![](ReadmeImages/API.png) API request with IDOR
+### API request with IDOR
 Request to server x retrieving JSON in the following format displayed in screen x.
 
-### ![](ReadmeImages/Database.png) Room database
+### Room database
 Type of data stored in the database used in screen x and displayed in screen y.
 
-### ![](ReadmeImages/Database.png) Secure storage
+### Secure storage
 Type of data stored used in screen x and displayed in screen y.
 
-### ![](ReadmeImages/Database.png) Unsecure storage
+### Unsecure storage
 Type of data stored used in screen x and displayed in screen y.
 
-### ![](ReadmeImages/Notifications.png) Malware
+### Malware
 Implementation of malware.
 
-### ![](ReadmeImages/Frida.png) Frida
+### Frida
 Detail implementation of Frida
 
-### ![](ReadmeImages/Root.png) Root
+### Root
 Implementation of the detecting root and block functionality.
 
 ## Link to Panopto video
