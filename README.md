@@ -47,7 +47,7 @@ This is the screen you see on startup, the Cat Listing Screen, which shows a lis
 
 - **Cat Communicator**: This button is guarded by a root-detection check and is disabled when the device is detected as rooted (the screenshot shows it disabled/greyed out). The intended flow requests microphone permission (see `PermissionCheckActivity`) and schedules the communicator/recording work; in `MainActivity` the communicator click handler is currently a placeholder.
 
-- **Customer Service**: This button navigates to the User Profile screen for a hardcoded user (`route: "userProfile/1"`). The `UserProfileScreen` shows the title "Customer Service" when the loaded profile has role `owner`. Because the listings screen navigates to a fixed `userId` this demonstrates the IDOR-style route usage in the app (hardcoded/profile-by-id behavior).
+- **Customer Service**: This button navigates to the User Profile screen for a hardcoded user. The `UserProfileScreen` shows the title "Customer Service" when the loaded profile has role `owner`. Because the listings screen navigates to a fixed `userId` this demonstrates the IDOR-style route usage in the app (hardcoded/profile-by-id behavior).
 
 Additionally, the app can show an **Admin Dashboard** button when `AppConfig.IS_ADMIN_ENABLED` is true; that button navigates to `admin_dashboard`.
 ![alt text](Images-README/admin-screen.png)
@@ -140,7 +140,7 @@ A Frida script was developed to demonstrate the bypass of a client-side security
   });
     }, 0);
     ```
-    
+
 ![alt text](Documentations/images/image.png)
 
 *Detail implementation of Frida - Zeini*
