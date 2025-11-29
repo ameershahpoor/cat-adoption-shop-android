@@ -7,29 +7,29 @@
 4. Ameer Shahpoor
 
 ## Project summary
-A brief summary about the application
+The "Cats Adoption Shop" is an Android application built using Kotlin. The app allows users to browse cat listings fetched from a public API, register for an account, and log in to a personal dashboard. The project intentionally implements both secure practices (e.g., SQL injection-safe Room database, SSL pinning) and security vulnerabilities (e.g., weak credential storage, bypassable root detection using Frida, IDOR) to showcase both secure functions and intentionally added vulnerabilities.
 
 ## Requirements
 ### ℹ️ Legend
-- :heavy_check_mark: = Implemented
-- :x: = Not implemented
-- :hourglass: = Work in progress
+- ✔️ = Implemented
+- ❌ = Not implemented
+- ⌛ = Work in progress
 
  
 |Status|Description|Details|
 |---|---|---|
-|| **Application** || 
-|| 2 UI screens
-|| Secure API request
-|| API request with IDOR
-|| Connection to room database
-|| Secure storage
-||  || 
-|| **Security** || 
-|| Unsafe storage
-|| Malware
-|| Frida functionality
-|| Detect root and block functionality
+| | **Application** || 
+|✔️ | 2 UI screens
+|✔️ | Secure API request
+|✔️ | API request with IDOR
+|✔️ | Connection to room database
+|⌛ | Secure storage
+| |  || 
+|  | **Security** || 
+|✔️ | Unsafe storage
+|✔️ | Malware
+|✔️ | Frida functionality
+|✔️ | Detect root and block functionality
 
 
 ## Overview app
