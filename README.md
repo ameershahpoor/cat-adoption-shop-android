@@ -147,6 +147,13 @@ A Frida script was developed to demonstrate the bypass of a client-side security
 ### Root
 *Implementation of the detecting root and block functionality.*
 
+The application implements root detection to block functionality on compromised devices.
+
+- **Implementations:**
+    - A `RootDetector.kt` utility was created. Its `isDeviceRooted()` function checks for the existence of common root-related files, such as the `su` binary in paths like `/system/bin/su` and `/system/xbin/su`.
+    -  This check is called from the `UserRepository.isAccessSecure()` method before any login database query is performed.
+- **Behaviour:** If the `isDeviceRooted()` function returns `true`, `isAccessSecure()` also returns `false`. This causes the login process to fail, and the user is shown a generic error message ("Invalid login, or the device might be rooted."). This blocks the login functionality on rooted devices.
+
 ## Link to Panopto video
 https://
 
