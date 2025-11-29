@@ -113,7 +113,7 @@ fun UserDashboardScreen(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFFE3F2FD))
                 ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
+                    Column(modifier = Modifier.padding(11.dp)) {
                         Text("ID: ${secureData!!.id}")
                         Text("Name: ${secureData!!.name}")
                         Text("Description: ${secureData!!.description}")
