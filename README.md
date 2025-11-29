@@ -62,15 +62,20 @@ Additionally, the app can show an **Admin Dashboard** button when `AppConfig.IS_
 *Type of data stored in the database used in screen x and displayed in screen y.*
 
 A local database was implemented using the Android Room Persistence Library to store user account information.
-- **Type of data stored**: User credentials, the users `id`, `username` and `encryptedPassword`.
-- **Implementation**: The `AppDatabase.kt` defines the database, which contains a `users` table based on the `User` entity. The `UserDao` interface provides safe access for creating and retrieving users.
-- **Usage**: The database is used by the **Login Screen**. When a user clicks "Register", their details are written to the database. When they click "Login", their info gets queried to the database, so it can verify the users existence and password.
+- **Type of data stored:** User credentials, the users `id`, `username` and `encryptedPassword`.
+- **Implementation:** The `AppDatabase.kt` defines the database, which contains a `users` table based on the `User` entity. The `UserDao` interface provides safe access for creating and retrieving users.
+- **Usage:** The database is used by the **Login Screen**. When a user clicks "Register", their details are written to the database. When they click "Login", their info gets queried to the database, so it can verify the users existence and password.
 
 ### Secure storage
 Type of data stored used in screen x and displayed in screen y.
 
 ### Unsecure storage
-Type of data stored used in screen x and displayed in screen y.
+An intentional vulnerability was introduced in how user passwords are stored to demonstrate the risk of using weak protection for sensitive data.
+
+-  **Type of Data:** User passwords.
+- **Implementation:** A `WeakEncryption.kt` utility object was created. Instead of using a strong, one-way cryptographic hash function, it uses simple **Base64 encoding** to "encrypt" the password before storing it in the local Room database.
+-   **Vulnerability:** Base64 is an encoding scheme, not encryption. It is designed for data transport, not security, and is trivially reversible. An attacker who gains access to the database file (e.g., on a rooted device or via a backup) can easily decode the `encryptedPassword` column to reveal the user's original plaintext password, completely compromising the account.
+
 
 ### Malware
 Implementation of malware.
