@@ -90,17 +90,12 @@ setTimeout(function () {
     );
 
     // 1. Get a handle to the UserRepository class
-    // Replace with your actual package name if it's different
     const UserRepository = Java.use(
       "com.example.catsadoption_shop.data.UserRepository"
     );
 
     // 2. Hook the target method: isAccessSecure()
-    // The '.overload()' is used to specify which function to hook if there are multiple
-    // with the same name but different arguments. Ours has no arguments.
     UserRepository.isAccessSecure.implementation = function () {
-      // This is our malicious implementation that replaces the original function
-
       // Log a message to the Frida console to confirm our hook is working
       console.log("[+] Intercepted call to isAccessSecure()!");
       console.log(
