@@ -62,9 +62,9 @@ Additionally, the app can show an **Admin Dashboard** button when `AppConfig.IS_
 *Type of data stored in the database used in screen x and displayed in screen y.*
 
 A local database was implemented using the Android Room Persistence Library to store user account information.
-- 
--
--
+- **Type of data stored**: User credentials, the users `id`, `username` and `encryptedPassword`.
+- **Implementation**: The `AppDatabase.kt` defines the database, which contains a `users` table based on the `User` entity. The `UserDao` interface provides safe access for creating and retrieving users.
+- **Usage**: The database is used by the **Login Screen**. When a user clicks "Register", their details are written to the database. When they click "Login", their info gets queried to the database, so it can verify the users existence and password.
 
 ### Secure storage
 Type of data stored used in screen x and displayed in screen y.
