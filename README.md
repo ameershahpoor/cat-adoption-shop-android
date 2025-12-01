@@ -1,6 +1,6 @@
 # Mobile Security project -  G30 - Documentation
 
-## Groupmember
+## Group members
 1. Moestafa Alhaj Abdo
 2. Abdullah Shafaquet
 3. Zeiniddin Fatayrji
@@ -19,17 +19,17 @@ The "Cats Adoption Shop" is an Android application built using Kotlin. The app a
 |Status|Description|Details|
 |---|---|---|
 | | **Application** || 
-|✔️ | 2 UI screens
-|✔️ | Secure API request
-|✔️ | API request with IDOR
-|✔️ | Connection to room database
-|⌛ | Secure storage
+|✔️ | 2 UI screens | There are multiple screens, all of which branch out from the **Cat Listing Screen** |
+|✔️ | Secure API request ||
+|✔️ | API request with IDOR ||
+|✔️ | Connection to room database | A Room Database was made, where the users information (ID, Username, Password) is stored |
+|⌛ | Secure storage ||
 | |  || 
 |  | **Security** || 
-|✔️ | Unsafe storage
-|✔️ | Malware
-|✔️ | Frida functionality
-|✔️ | Detect root and block functionality
+|✔️ | Unsafe storage | The users password is stored using base64, a very recognizable method of encryption |
+|✔️ | Malware ||
+|✔️ | Frida functionality | We provided 2 methods of a Frida bypass, one self written and the other from online to showcase how we can use both to break through |
+|✔️ | Detect root and block functionality | We made a **Root Detector** which checks the **su binaries** to check if the device is rooted or not |
 
 
 ## Overview app
