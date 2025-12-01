@@ -55,6 +55,11 @@ Additionally, the app can show an **Admin Dashboard** button when `AppConfig.IS_
 ### Secure API request
 *Request to server x retrieving JSON in the following format displayed in screen x.*
 
+The secure API is integrated directly into the User Dashboard. Upon user authentication, the dashboard triggers two parallel coroutine tasks: 
+- one retrieves data from the standard API, 
+- the other queries the secure endpoint. 
+If the certificate validation succeeds, the secure API response is displayed normally. If the validation fails—such as during attempted interception or manipulation—the interface presents a clear and explicit error message. This implementation ensures that any attempt to intercept, alter, or downgrade the request must not compromise or modify the secure endpoint’s behavior.
+
 ### API request with IDOR
 *Request to server x retrieving JSON in the following format displayed in screen x.*
 
