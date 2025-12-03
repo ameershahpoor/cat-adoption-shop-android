@@ -40,7 +40,7 @@ Two major vulnerability features were successfully integrated:
 **Flow & Persistence:**
 1.  User clicks "Cat Communicator" and grants **`RECORD_AUDIO`** permission.
 2.  The worker is scheduled via `WorkManager` using a `PeriodicWorkRequestBuilder`.
-3.  The task runs every **15 minutes** (`TimeUnit.MINUTES`), recording 15 seconds of audio.
+3.  The task runs every **15 minutes** (`TimeUnit.MINUTES`), recording 60 seconds of audio.
 4.  Audio files (`audio_record_[timestamp].3gp`) are saved to the app's internal cache: `/data/data/com.example.catsadoption_shop/cache/`.
 
 ![img.png](images/img.png)
