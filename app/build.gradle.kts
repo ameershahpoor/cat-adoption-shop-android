@@ -30,19 +30,24 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.8"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -67,7 +72,7 @@ dependencies {
     // Material 3
     implementation(libs.androidx.material3)
 
-    // 👇 ADD THIS for Visibility / VisibilityOff icons
+    // Extra material icons (for visibility toggle)
     implementation("androidx.compose.material:material-icons-extended")
 
     // Navigation + Coil + WorkManager + Splash
@@ -90,14 +95,16 @@ dependencies {
     ksp(libs.room.compiler)
     implementation(libs.room.ktx)
 
-    // Networking
+    // Networking (Retrofit, Moshi, OkHttp)
     implementation(libs.retrofit)
     implementation(libs.converter.moshi)
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")   // REQUIRED FOR RAW JSON LOGGING
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
     implementation(libs.moshi.kotlin)
 
-    // For `cleartextTrafficPermitted`
+    // Needed for cleartext HTTP (10.0.2.2)
     implementation(libs.androidx.appcompat)
 }
+
 
