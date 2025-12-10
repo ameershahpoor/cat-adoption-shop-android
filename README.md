@@ -78,6 +78,8 @@ An insecure API endpoint was intentionally created to demonstrate an Insecure Di
     *   The Android app uses an insecure client (`InsecureApiClient.kt`) to call this endpoint, navigating to `userProfile/1` when the "Customer Service" button is clicked.
 *   **Vulnerability:** An attacker can intercept this request using a proxy like Burp Suite and change the user ID in the URL (e.g., from `/users/1` to `/users/2`). Because the backend does not validate that the requester is authorized to view the requested profile, it will return the private data of any valid user ID, which is then displayed in the app. This demonstrates a critical broken access control flaw.
 
+![alt text](Documentations/images/img12.png)
+
 ### Room database
 *Type of data stored in the database used in screen x and displayed in screen y.*
 
