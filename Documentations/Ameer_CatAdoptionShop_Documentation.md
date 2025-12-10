@@ -84,7 +84,7 @@ This section explains how the testing environment was prepared before performing
 ### Android Emulator Proxy Configuration
 The Android emulator was configured to route all HTTP traffic through Burp Suite so that API calls could be intercepted.
 
-![alt text](images/img7.png)
+![image.png](images/img7.png)
 
 
 ### Burp Suite Proxy Listener Configuration
@@ -93,13 +93,13 @@ Burp Suite was set to listen for incoming traffic from the emulator.
 - Interface: All interfaces (0.0.0.0)
 
 - Port: 8080
-  
-![alt text](images/img8.png)
+
+![image.png](images/img8.png)
 
 ### Successful Interception of App Traffic
 After configuring both the emulator and Burp Suite, the app's network traffic appeared in Burp’s HTTP history, confirming that interception was working.
 
-![alt text](images/img9.png)
+![image.png](images/img9.png)
 
 ## Exploitation of IDOR Vulnerability
 
@@ -111,7 +111,7 @@ This action automatically triggers an API call to the backend:
 This endpoint returns the profile information of the default user with ID 1.
 The application blindly assumes this ID is valid and does not verify whether the requester should have access.
 
-![alt text](images/img10.png)   ![alt text](images/img11.png)
+![image.png](images/img10.png)   ![image.png](images/img11.png)
 
 ### Interception of the Request Using Burp Suite
 With Burp Suite running as a proxy, the request is captured and displayed inside the Proxy → **HTTP history** tab.
@@ -119,7 +119,7 @@ At this moment, the attacker can fully view and modify the HTTP request before i
 
 This lack of endpoint-level authorization makes the app highly vulnerable.
 
-![alt text](images/img12.png)
+![image.png](images/img12.png)
 
 ### Tampering With the User ID Parameter
 The attacker edits the request by changing the user ID parameter inside the URL.
@@ -129,7 +129,7 @@ For example, modifying:
 
 The backend performs no validation, so it returns the profile data of the requested user ID — even though the attacker is not authenticated as that user.
 
-![alt text](images/img13.png)
+![image.png](images/img13.png)
 
 ### Unauthorized Access to Other Users’ Data
 
@@ -141,9 +141,8 @@ This confirms a successful exploitation:
 
 The attacker is able to access any user’s profile simply by changing the numeric ID in the request.
 
-![alt text](images/img14.png)
-
-![alt text](images/img15.png)
+![image.png](images/img14.png)
+![image.png](images/img15.png)
 ### Security Impact of the Vulnerability
 This flaw demonstrates a **critical Broken Access Control issue:**
 
