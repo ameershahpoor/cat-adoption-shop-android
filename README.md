@@ -69,7 +69,14 @@ The secure API is integrated directly into the User Dashboard. Upon user authent
 If the certificate validation succeeds, the secure API response is displayed normally. If the validation fails, such as during attempted interception or manipulation, then the interface presents a clear and explicit error message. This implementation ensures that any attempt to intercept, alter, or downgrade the request must not compromise or modify the secure endpoint’s behavior.
 
 ### API request with IDOR
-*Request to server x retrieving JSON in the following format displayed in screen x.*
+An insecure API endpoint was intentionally created to demonstrate an Insecure Direct Object Reference (IDOR) vulnerability.
+
+*   **Type of Data:** The endpoint exposes sensitive user profile information, including name, birthdate, email, and phone number.
+*   **Implementation:**
+    *   A **FastAPI backend** (`cats_backend/`) was created with a `/users/{user_id}` endpoint.
+    *   This endpoint retrieves user data based *only* on the `user_id` provided in the URL, without performing any authentication or authorization checks.
+    *   The Android app uses an insecure client (`InsecureApiClient.kt`) to call this endpoint, navigating to `userProfile/1` when the "Customer Service" button is clicked.
+*   **Vulnerability:** An attacker can intercept this request using a proxy like Burp Suite and change the user ID in the URL (e.g., from `/users/1` to `/users/2`). Because the backend does not validate that the requester is authorized to view the requested profile, it will return the private data of any valid user ID, which is then displayed in the app. This demonstrates a critical broken access control flaw.
 
 ### Room database
 *Type of data stored in the database used in screen x and displayed in screen y.*
