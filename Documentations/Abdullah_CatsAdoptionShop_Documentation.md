@@ -46,7 +46,7 @@ The development here can be broken down into three main parts:
 
 ---
 
-### Deliverbale 2 - Intentional Security Vulnerabilities
+### Deliverable 2 - Intentional Security Vulnerabilities
 
 **Objective:** Implement 2 common mobilie security flaws for demonstrations and exploitations.
 
