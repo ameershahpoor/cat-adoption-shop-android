@@ -138,7 +138,7 @@ fun AdoptedCatItem(cat: CatResponse) {
         modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        Row(modifier = Modifier.padding(12.dp)) {
+        Row(modifier = Modifier.padding(4.dp)) {
             AsyncImage(
                 model = cat.url,
                 contentDescription = "Adopted cat",
