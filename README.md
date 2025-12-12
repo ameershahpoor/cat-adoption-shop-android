@@ -51,7 +51,7 @@ This is the screen you see on startup, the Cat Listing Screen, which shows a lis
 ![alt text](Images-README/cat-communicator.png)
 
 ![alt text](Images-README/cat-communicator-in-works.png)
-- **Customer Service**: This button navigates to the User Profile screen for a hardcoded user. The `UserProfileScreen` shows the title "Customer Service" when the loaded profile has role `owner`. Because the listings screen navigates to a fixed `userId` this demonstrates the IDOR-style route usage in the app (hardcoded/profile-by-id behavior).
+- **Customer Service**: This button navigates to the User Profile screen for a hardcoded user. The `UserProfileScreen` shows the title "Customer Service" when the loaded profile has role `User Agent`. Because the listings screen navigates to a fixed `userId` this demonstrates the IDOR-style route usage in the app (hardcoded/profile-by-id behavior).
 
 ![alt text](Images-README/customer-service.png)
 
