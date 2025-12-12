@@ -140,6 +140,6 @@ fun CatListingsScreenPreview() {
         onLoginClick = {},
         onCatCommunicatorClick = {},
         onAdminClick = {},
-        onProfileClick = {}
+        onProfileClick = {} // <<< I HAVE ADDED THIS LINE
     )
 }

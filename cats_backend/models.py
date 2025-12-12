@@ -27,4 +27,3 @@ class AuthRequest(BaseModel):
 class AuthResponse(BaseModel):
     userId: int
     username: str
-//

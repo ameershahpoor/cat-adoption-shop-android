@@ -12,7 +12,7 @@ interface InsecureApiService {
     @GET("users/{id}")
     suspend fun getUser(
         @Path("id") id: Int
-    ): Response<UserProfile>
+    ): Response<UserProfile> // <<< CHANGED BACK TO UserProfile
 
     // --- Authentication ---
     @POST("auth/login")

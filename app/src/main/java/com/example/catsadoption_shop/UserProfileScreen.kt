@@ -37,6 +37,15 @@ fun UserProfileScreen(
     var errorMessage by remember { mutableStateOf<String?>(null) }
     var isLoading by remember { mutableStateOf(true) }
 
+    if (userId <= 0) {
+        Text(
+            text = "Invalid user ID: $userId",
+            color = Color.Red,
+            modifier = Modifier.padding(16.dp)
+        )
+        return
+    }
+
     LaunchedEffect(userId) {
         scope.launch {
             try {
@@ -45,7 +54,8 @@ fun UserProfileScreen(
                     profile = response.body()
                     errorMessage = null
                 } else {
-                    errorMessage = "Server error: ${response.code()}"
+                    val err = response.errorBody()?.string() ?: "Unknown error"
+                    errorMessage = "Server error: ${response.code()}\n$err"
                 }
             } catch (e: Exception) {
                 errorMessage = "Network error: ${e.message}"
@@ -54,8 +64,6 @@ fun UserProfileScreen(
             }
         }
     }
-
-    val bgColor = Color(0xFFF6F0FF)
 
     Scaffold(
         topBar = {
@@ -81,26 +89,20 @@ fun UserProfileScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
-            color = bgColor
+            color = Color(0xFFF6F0FF)
         ) {
             when {
-                isLoading -> {
-                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
-                    }
+                isLoading -> Box(Modifier.fillMaxSize(), Alignment.Center) {
+                    CircularProgressIndicator()
                 }
 
-                errorMessage != null -> {
-                    Text(
-                        text = errorMessage!!,
-                        color = Color.Red,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
+                errorMessage != null -> Text(
+                    text = errorMessage!!,
+                    color = Color.Red,
+                    modifier = Modifier.padding(16.dp)
+                )
 
-                profile != null -> {
-                    ProfileContent(profile!!)
-                }
+                profile != null -> ProfileContent(profile!!)
             }
         }
     }
@@ -115,18 +117,13 @@ private fun ProfileContent(profile: UserProfile) {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-
-        // Header
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(240.dp)
                 .background(
                     Brush.verticalGradient(
-                        listOf(
-                            Color(0xFF7C4DFF),
-                            Color(0xFFE1BEE7)
-                        )
+                        listOf(Color(0xFF7C4DFF), Color(0xFFE1BEE7))
                     )
                 )
         ) {
@@ -138,38 +135,23 @@ private fun ProfileContent(profile: UserProfile) {
             ) {
                 Avatar(null)
                 Spacer(Modifier.height(8.dp))
-
                 Text(
                     text = profile.name,
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
-
                 if (!isOwner) {
-                    Text(
-                        text = "User ID: ${profile.id}",
-                        color = Color.White
-                    )
-                    Text(
-                        text = "Birthdate: ${profile.birthdate}",
-                        color = Color.White
-                    )
+                    Text("User ID: ${profile.id}", color = Color.White)
+                    Text("Birthdate: ${profile.birthdate}", color = Color.White)
                 }
             }
         }
 
         Spacer(Modifier.height(16.dp))
-
-        // Contact Card (shown for ALL users)
         ContactInfoCard(profile)
-
         Spacer(Modifier.height(16.dp))
-
-        // Adopted Cats for normal users only
-        if (!isOwner) {
-            AdoptedCatsSection(profile.adoptedCats)
-        }
+        if (!isOwner) AdoptedCatsSection(profile.adoptedCats)
     }
 }
 
@@ -185,17 +167,11 @@ private fun ContactInfoCard(profile: UserProfile) {
         Column(Modifier.padding(20.dp)) {
             Text("Contact Information", fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(8.dp))
-
-            profile.email?.let {
-                Text("📧 Email: $it")
-            }
-            profile.phone?.let {
-                Text("📞 Phone: $it")
-            }
-
+            Text("📧 Email: ${profile.email}")
+            Text("📞 Phone: ${profile.phone}")
             if (profile.role == "owner") {
                 Spacer(Modifier.height(6.dp))
-                Text("🏬 Role: Shop Owner", fontWeight = FontWeight.SemiBold)
+                Text("🏬 Role: User Agent", fontWeight = FontWeight.SemiBold)
             }
         }
     }
