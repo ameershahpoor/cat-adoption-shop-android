@@ -81,6 +81,33 @@ Demonstrate how modifying a user ID in an API request exposes private data of ot
 
 This section explains how the testing environment was prepared before performing the IDOR vulnerability analysis.
 
+### How to Run the Backend Server
+For the Android application to get user data from the custom API, the Python backend server must be running on your computer.
+
+#### Step 1: Navigate to the Correct Directory
+First, open the terminal in Android Studio and navigate into the `cats_backend` folder.
+
+```sh
+cd cats_backend
+```
+
+#### Step 2: Run the Server
+Once you are inside the `cats_backend` directory, run the following command:
+
+```sh
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+This command starts the server and makes it visible to your Android emulator. You should see output confirming that the server is running.
+
+#### Explanation of the Command
+*   **`uvicorn`**: This is the program we use to run our Python web server.
+*   **`main:app`**: This tells Uvicorn what to run.
+    *   `main`: "Look for a file named **`main.py`**."
+    *   `app`: "Inside that file, find the FastAPI object named **`app`**."
+*   **`--host 0.0.0.0`**: This tells the server to listen for connections from **any device** on the network. This is required for the Android emulator to be able to connect to it.
+*   **`--port 8000`**: This tells the server to listen on **port `8000`**, which matches the port number the Android app is configured to use.
+
 ### Android Emulator Proxy Configuration
 The Android emulator was configured to route all HTTP traffic through Burp Suite so that API calls could be intercepted.
 
@@ -142,7 +169,6 @@ This confirms a successful exploitation:
 The attacker is able to access any user’s profile simply by changing the numeric ID in the request.
 
 ![alt text](images/img14.png)
-
 ![alt text](images/img15.png)
 ### Security Impact of the Vulnerability
 This flaw demonstrates a **critical Broken Access Control issue:**
@@ -162,5 +188,3 @@ In real-world systems, this would be categorized as a **High** or **Critical** s
 ---
 
 **End of documentation — Member 4 (Ameer)**
-
-
