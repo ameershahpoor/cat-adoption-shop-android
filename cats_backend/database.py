@@ -110,24 +110,5 @@ def init_fake_data() -> None:
         ],
     )
 
-
-def create_customer(username: str, password: str) -> UserRecord:
-    """Creates the user from /auth/register."""
-    return _add_user(
-        username=username,
-        password=password,
-        role="customer",
-        name=username.capitalize(),
-        birthdate=date(1995, 1, 1),
-        email=f"{username}@catsadoption.shop",
-        phone="+31 6 0000 0000",
-        adoptedCats=[],
-    )
-
-
-def find_user_by_username(username: str) -> Optional[UserRecord]:
-    return _users_by_username.get(username)
-
-
 def get_user_by_id(user_id: int) -> Optional[UserRecord]:
     return _users_by_id.get(user_id)
