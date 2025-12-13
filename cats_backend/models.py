@@ -15,15 +15,5 @@ class UserProfile(BaseModel):
     birthdate: date
     email: str
     phone: str
-    role: str          # "owner" or "customer"
+    role: str
     adoptedCats: List[AdoptedCat]
-
-
-class AuthRequest(BaseModel):
-    username: str
-    password: str
-
-
-class AuthResponse(BaseModel):
-    userId: int
-    username: str
