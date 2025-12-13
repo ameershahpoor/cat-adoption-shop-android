@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from models import UserProfile, AdoptedCat
+from database import init_fake_data, get_user_by_id
 from datetime import date
 
 app = FastAPI(title="CatsAdoption IDOR backend")
