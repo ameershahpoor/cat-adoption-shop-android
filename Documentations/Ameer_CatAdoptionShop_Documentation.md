@@ -81,10 +81,37 @@ Demonstrate how modifying a user ID in an API request exposes private data of ot
 
 This section explains how the testing environment was prepared before performing the IDOR vulnerability analysis.
 
+### How to Run the Backend Server
+For the Android application to get user data from the custom API, the Python backend server must be running on your computer.
+
+#### Step 1: Navigate to the Correct Directory
+First, open the terminal in Android Studio and navigate into the `cats_backend` folder.
+
+```sh
+cd cats_backend
+```
+
+#### Step 2: Run the Server
+Once you are inside the `cats_backend` directory, run the following command:
+
+```sh
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+This command starts the server and makes it visible to your Android emulator. You should see output confirming that the server is running.
+
+#### Explanation of the Command
+*   **`uvicorn`**: This is the program we use to run our Python web server.
+*   **`main:app`**: This tells Uvicorn what to run.
+    *   `main`: "Look for a file named **`main.py`**."
+    *   `app`: "Inside that file, find the FastAPI object named **`app`**."
+*   **`--host 0.0.0.0`**: This tells the server to listen for connections from **any device** on the network. This is required for the Android emulator to be able to connect to it.
+*   **`--port 8000`**: This tells the server to listen on **port `8000`**, which matches the port number the Android app is configured to use.
+
 ### Android Emulator Proxy Configuration
 The Android emulator was configured to route all HTTP traffic through Burp Suite so that API calls could be intercepted.
 
-![image.png](images/img7.png)
+![alt text](images/img7.png)
 
 
 ### Burp Suite Proxy Listener Configuration
@@ -93,13 +120,13 @@ Burp Suite was set to listen for incoming traffic from the emulator.
 - Interface: All interfaces (0.0.0.0)
 
 - Port: 8080
-
-![image.png](images/img8.png)
+  
+![alt text](images/img8.png)
 
 ### Successful Interception of App Traffic
 After configuring both the emulator and Burp Suite, the app's network traffic appeared in Burp’s HTTP history, confirming that interception was working.
 
-![image.png](images/img9.png)
+![alt text](images/img9.png)
 
 ## Exploitation of IDOR Vulnerability
 
@@ -111,7 +138,7 @@ This action automatically triggers an API call to the backend:
 This endpoint returns the profile information of the default user with ID 1.
 The application blindly assumes this ID is valid and does not verify whether the requester should have access.
 
-![image.png](images/img10.png)   ![image.png](images/img11.png)
+![alt text](images/img10.png)   ![alt text](images/img11.png)
 
 ### Interception of the Request Using Burp Suite
 With Burp Suite running as a proxy, the request is captured and displayed inside the Proxy → **HTTP history** tab.
@@ -119,7 +146,7 @@ At this moment, the attacker can fully view and modify the HTTP request before i
 
 This lack of endpoint-level authorization makes the app highly vulnerable.
 
-![image.png](images/img12.png)
+![alt text](images/img12.png)
 
 ### Tampering With the User ID Parameter
 The attacker edits the request by changing the user ID parameter inside the URL.
@@ -129,7 +156,7 @@ For example, modifying:
 
 The backend performs no validation, so it returns the profile data of the requested user ID — even though the attacker is not authenticated as that user.
 
-![image.png](images/img13.png)
+![alt text](images/img13.png)
 
 ### Unauthorized Access to Other Users’ Data
 
@@ -141,8 +168,8 @@ This confirms a successful exploitation:
 
 The attacker is able to access any user’s profile simply by changing the numeric ID in the request.
 
-![image.png](images/img14.png)
-![image.png](images/img15.png)
+![alt text](images/img14.png)
+![alt text](images/img15.png)
 ### Security Impact of the Vulnerability
 This flaw demonstrates a **critical Broken Access Control issue:**
 
@@ -161,5 +188,3 @@ In real-world systems, this would be categorized as a **High** or **Critical** s
 ---
 
 **End of documentation — Member 4 (Ameer)**
-
-
