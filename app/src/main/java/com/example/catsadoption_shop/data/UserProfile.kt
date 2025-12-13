@@ -6,8 +6,8 @@ import com.squareup.moshi.JsonClass
 data class UserProfile(
     val id: Int,
     val name: String,
-    val birthdate: String,          // "1970-01-01" etc.
-    val role: String,               // "owner" or "customer"
+    val birthdate: String,
+    val role: String,
     val email: String,
     val phone: String,
     val adoptedCats: List<AdoptedCat> = emptyList()
