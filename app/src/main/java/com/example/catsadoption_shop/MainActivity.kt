@@ -1,9 +1,11 @@
 package com.example.catsadoption_shop
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -46,9 +48,13 @@ fun CatsAdoptionShopApp() {
         // 1. CAT LISTINGS SCREEN (DEFAULT)
         // -------------------------------------------------------------
         composable("listings") {
+            val context = LocalContext.current
             CatListingsScreen(
                 onLoginClick = { navController.navigate("login") },
-                onCatCommunicatorClick = { /* existing functionality */ },
+                onCatCommunicatorClick = {
+                    val intent = Intent(context, PermissionCheckActivity::class.java)
+                    context.startActivity(intent)
+                },
                 onAdminClick = { navController.navigate("admin_dashboard") },
                 // This triggers IDOR route
                 onProfileClick = { navController.navigate("userProfile/1") }
