@@ -181,7 +181,7 @@ The application implements root detection to block functionality on compromised 
 ![alt text](Images-README/device-is-rooted-error.png)
 
 ## Link to Panopto video
-https://
+https://howest.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=6a5dcde1-e07b-46a1-abce-b3b500c60904
 
 ## Repositories
 - Code
