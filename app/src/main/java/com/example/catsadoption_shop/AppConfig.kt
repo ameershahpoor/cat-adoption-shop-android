@@ -8,5 +8,5 @@ object AppConfig {
      * A flag to enable or disable admin-only features.
      * This is hardcoded for simplicity.
      */
-    const val IS_ADMIN_ENABLED = false
+    val IS_ADMIN_ENABLED = false
 }
