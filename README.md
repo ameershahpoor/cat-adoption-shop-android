@@ -185,6 +185,6 @@ https://
 
 ## Repositories
 - Code
-  - https://gitlab.ti.howest.be/ti/2025-2026/s3/mobilesecurity/students/group-30/catsadoptionshop/-/tree/dev?ref_type=heads
+  - https://gitlab.ti.howest.be/ti/2025-2026/s3/mobilesecurity/students/group-30/catsadoptionshop
 - APK
   - [Link to repository]
