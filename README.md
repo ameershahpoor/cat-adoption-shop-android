@@ -36,11 +36,11 @@ The "Cats Adoption Shop" is an Android application built using Kotlin. The app a
 
 ## Overview app
 
-_Describe the implementation of the following topics._
+*Describe the implementation of the following topics.*
 
 ### Screenshots
 
-_Give screenshots for every screen in the application. Give each screen an unique name._
+*Give screenshots for every screen in the application. Give each screen an unique name.*
 
 ![alt text](Images-README/image.png)
 
@@ -66,7 +66,7 @@ Additionally, the app can show an **Admin Dashboard** button when `AppConfig.IS_
 
 ### Secure API request
 
-_Request to server x retrieving JSON in the following format displayed in screen x._
+*Request to server x retrieving JSON in the following format displayed in screen x.*
 
 The secure API is integrated directly into the User Dashboard. Upon user authentication, the dashboard triggers two parallel coroutine tasks:
 
@@ -82,15 +82,13 @@ An insecure API endpoint was intentionally created to demonstrate an Insecure Di
 - **Type of Data:** The endpoint exposes sensitive user profile information, including name, birthdate, email, and phone number.
 - **Implementation:**
   - A **FastAPI backend** (`cats_backend/`) was created with a `/users/{user_id}` endpoint.
-  - This endpoint retrieves user data based _only_ on the `user_id` provided in the URL, without performing any authentication or authorization checks.
+  - This endpoint retrieves user data based *only* on the `user_id` provided in the URL, without performing any authentication or authorization checks.
   - The Android app uses an insecure client (`InsecureApiClient.kt`) to call this endpoint, navigating to `userProfile/1` when the "Customer Service" button is clicked.
 - **Vulnerability:** An attacker can intercept this request using a proxy like Burp Suite and change the user ID in the URL (e.g., from `/users/1` to `/users/2`). Because the backend does not validate that the requester is authorized to view the requested profile, it will return the private data of any valid user ID, which is then displayed in the app. This demonstrates a critical broken access control flaw.
 
-![alt text](Documentations/images/img9.png)
-
 ### Room database
 
-_Type of data stored in the database used in screen x and displayed in screen y._
+*Type of data stored in the database used in screen x and displayed in screen y.*
 
 A local database was implemented using the Android Room Persistence Library to store user account information.
 
@@ -100,11 +98,11 @@ A local database was implemented using the Android Room Persistence Library to s
 
 ### Secure storage
 
-_Type of data stored used in screen x and displayed in screen y._
+*Type of data stored used in screen x and displayed in screen y.*
 
 ### Unsecure storage
 
-_Type of data stored used in screen x and displayed in screen y._
+*Type of data stored used in screen x and displayed in screen y.*
 
 An intentional vulnerability was introduced in how user passwords are stored to demonstrate the risk of using weak protection for sensitive data.
 
@@ -117,11 +115,11 @@ An intentional vulnerability was introduced in how user passwords are stored to 
 
 ### Malware
 
-_Implementation of malware._
+*Implementation of malware.*
 
 ### Frida
 
-_Detail implementation of Frida - Abdullah_
+*Detail implementation of Frida - Abdullah*
 
 A Frida script was developed to demonstrate the bypass of a client-side security control at runtime.
 
@@ -182,7 +180,9 @@ A Frida script was developed to demonstrate the bypass of a client-side security
 
 ![alt text](Documentations/images/image.png)
 
-_Detail implementation of Frida - Zeini_
+*Detail implementation of Frida - Zeini*
+
+An online frida script was used here to bypass all root, superuser, build tags detection.
 
 - **Target:** The `isDeviceRooted()` function in `RootUtils.kt`, which checks for the presence of `su` binaries, `Superuser.apk`, and test-keys in build tags. This function is used to disable the "Cat Communicator" button if root is detected.
 - **Execution:** The root detection can be bypassed at runtime using a public Frida anti-root script or Magisk root-hiding features.
@@ -203,7 +203,7 @@ _Detail implementation of Frida - Zeini_
 
 ### Root
 
-_Implementation of the detecting root and block functionality._
+*Implementation of the detecting root and block functionality.*
 
 The application implements root detection to block functionality on compromised devices.
 
