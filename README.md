@@ -222,5 +222,6 @@ https://howest.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=6a5dcde1-e07b-46a1-
 
 - Code
   - https://gitlab.ti.howest.be/ti/2025-2026/s3/mobilesecurity/students/group-30/catsadoptionshop
-- APK
-  - [Link to repository]
+- APKs
+  - Base: https://gitlab.ti.howest.be/ti/2025-2026/s3/mobilesecurity/students/group-30/catsadoptionshop/-/blob/main/APK/CatAdoptionShop.apk
+  - Injected and edited: https://gitlab.ti.howest.be/ti/2025-2026/s3/mobilesecurity/students/group-30/catsadoptionshop/-/blob/main/APK/Aligned_Injected_CatAdoptionShop.apk
